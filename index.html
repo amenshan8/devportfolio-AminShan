@@ -1,0 +1,582 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amin Shan | Aspiring Software Developer Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">Amin<span class="accent">Shan</span></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#ai-showcase" class="nav-link">My Work</a></li>
+                <li><a href="#cv" class="nav-link">CV</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">
+                            Amin Shan
+                            <span class="gradient-text">Aspiring Software Developer</span>
+                        </h1>
+                        <p class="hero-description">
+                            I am an ambitious and detail-oriented aspiring software developer. I enjoy building websites, developing software, and solving technical problems. I have experience with cracking games and software for educational purposes, programming games, and creating websites using HTML, CSS, and JavaScript.
+                            <br><br>
+                            I speak Arabic, Turkish, Dutch, and English.
+                        </p>
+                        <div class="hero-buttons">
+                            <button class="btn-primary" onclick="scrollToSection('projects')">
+                                View Projects <i class="fas fa-arrow-right"></i>
+                            </button>
+                            <button class="btn-secondary" onclick="scrollToSection('contact')">
+                                Contact Me <i class="fas fa-envelope"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="floating-card">
+                            <div class="card-header">
+                                <span class="card-title">Skills Overview</span>
+                                <div class="status-dot"></div>
+                            </div>
+                            <div class="code-preview">
+                                <code>
+                                    <span class="keyword">const</span> <span class="variable">skills</span> = {<br>
+                                    &nbsp;&nbsp;<span class="property">languages</span>: [<span class="string">"HTML"</span>, <span class="string">"CSS"</span>, <span class="string">"JavaScript"</span>, <span class="string">"Python"</span>, <span class="string">"SQL"</span>],<br>
+                                    &nbsp;&nbsp;<span class="property">frameworks</span>: [<span class="string">"React"</span>, <span class="string">"Tailwind"</span>, <span class="string">"Node.js"</span>],<br>
+                                    &nbsp;&nbsp;<span class="property">specialties</span>: [<span class="string">"AI-Assisted Dev"</span>, <span class="string">"Game Dev"</span>, <span class="string">"Multilingual Sites"</span>]<br>
+                                    };
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="scroll-line"></div>
+                <span>Scroll to explore</span>
+            </div>
+        </section>
+
+        <section id="skills-languages" class="skills-languages-section">
+            <div class="container">
+                <h2 class="section-title">Skills & Languages</h2>
+                
+                <div class="skills-languages-grid">
+                    <div class="skill-category">
+                        <div class="category-header">
+                            <i class="fas fa-code"></i>
+                            <h3>Technical Skills</h3>
+                        </div>
+                        <div class="skill-list">
+                            <div class="skill-item">
+                                <div class="skill-header">
+                                    <span>HTML</span>
+                                    <span class="percentage">90%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="90"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-header">
+                                    <span>CSS</span>
+                                    <span class="percentage">80%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="80"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-header">
+                                    <span>JavaScript</span>
+                                    <span class="percentage">70%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="70"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="category-header">
+                            <i class="fas fa-language"></i>
+                            <h3>Languages</h3>
+                        </div>
+                        <div class="skill-list">
+                            <div class="skill-item">
+                                <div class="skill-header">
+                                    <span>Arabic</span>
+                                    <span class="percentage">100%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="100"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-header">
+                                    <span>Turkish</span>
+                                    <span class="percentage">20%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="20"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-header">
+                                    <span>Dutch</span>
+                                    <span class="percentage">60%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="60"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-header">
+                                    <span>English</span>
+                                    <span class="percentage">95%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="95"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="skills-section">
+            <div class="container">
+                <h2 class="section-title">Professional Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <div class="category-header">
+                            <i class="fas fa-brain"></i>
+                            <h3>Professional Skills</h3>
+                        </div>
+                        <div class="skill-list">
+                            <div class="skill-item">
+                                <span>Problem Solving</span>
+                                <div class="skill-bar"><div class="skill-progress" data-width="95"></div></div>
+                            </div>
+                            <div class="skill-item">
+                                <span>Leadership</span>
+                                <div class="skill-bar"><div class="skill-progress" data-width="85"></div></div>
+                            </div>
+                            <div class="skill-item">
+                                <span>Critical Thinking</span>
+                                <div class="skill-bar"><div class="skill-progress" data-width="90"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="category-header">
+                            <i class="fas fa-cogs"></i>
+                            <h3>Personal Strengths</h3>
+                        </div>
+                        <div class="skill-list">
+                            <div class="skill-item">
+                                <span>Patience</span>
+                                <div class="skill-bar"><div class="skill-progress" data-width="95"></div></div>
+                            </div>
+                            <div class="skill-item">
+                                <span>Attention to Detail</span>
+                                <div class="skill-bar"><div class="skill-progress" data-width="98"></div></div>
+                            </div>
+                            <div class="skill-item">
+                                <span>Adaptability</span>
+                                <div class="skill-bar"><div class="skill-progress" data-width="88"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="projects-section">
+            <div class="container">
+                <h2 class="section-title">My Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="workout_planerv182.png.jpeg" alt="Workout Planner App">
+                            <div class="project-overlay">
+                                <div class="overlay-content">
+                                    <button class="project-btn demo-btn" onclick="window.open('https://amenshan8.github.io/workout_planerv182/', '_blank')">
+                                        <i class="fas fa-external-link-alt"></i> Live Demo
+                                    </button>
+                                    <button class="project-btn github-btn" onclick="window.open('https://github.com/amenshan8/workout_planerv182', '_blank')">
+                                        <i class="fab fa-github"></i> GitHub Repo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Workout Planner App</h3>
+                            <p>My favorite project so far! A workout planner where you can add exercises, link videos, and export your plan to PDF. One day, I hope to turn this into a full mobile app to help people get healthier.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML</span>
+                                <span class="tech-tag">CSS</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">PDF Export</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="barber-shop1.png.jpeg" alt="Barber Shop Website">
+                            <div class="project-overlay">
+                                <div class="overlay-content">
+                                    <button class="project-btn demo-btn" onclick="window.open('https://amenshan8.github.io/barber-shop1/', '_blank')">
+                                        <i class="fas fa-external-link-alt"></i> Live Demo
+                                    </button>
+                                    <button class="project-btn github-btn" onclick="window.open('https://github.com/amenshan8/barber-shop1', '_blank')">
+                                        <i class="fab fa-github"></i> GitHub Repo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Barber Shop Website</h3>
+                            <p>A simple but heartfelt project where I tried to create a barbershop website for everyone, translated into all the languages I know.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML</span>
+                                <span class="tech-tag">CSS</span>
+                                <span class="tech-tag">Multi-language</span>
+                                <span class="tech-tag">Responsive</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="neon-tetris-v2.png.jpeg" alt="Neon Tetris Game">
+                            <div class="project-overlay">
+                                <div class="overlay-content">
+                                    <button class="project-btn demo-btn" onclick="window.open('https://amenshan8.github.io/neon-tetris-v2/', '_blank')">
+                                        <i class="fas fa-external-link-alt"></i> Live Demo
+                                    </button>
+                                    <button class="project-btn github-btn" onclick="window.open('https://github.com/amenshan8/neon-tetris-v2', '_blank')">
+                                        <i class="fab fa-github"></i> GitHub Repo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Neon Tetris Game</h3>
+                            <p>A modern version of Tetris with a neon look. Fun, simple, and playable directly in the browser.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML5</span>
+                                <span class="tech-tag">Canvas</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Game Dev</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="plant-v-zom-v2-game.png.jpeg" alt="Plants vs Zombies Fan Game">
+                            <div class="project-overlay">
+                                <div class="overlay-content">
+                                    <button class="project-btn demo-btn" onclick="window.open('https://amenshan8.github.io/plant-v-zom-v2-game/', '_blank')">
+                                        <i class="fas fa-external-link-alt"></i> Live Demo
+                                    </button>
+                                    <button class="project-btn github-btn" onclick="window.open('https://github.com/amenshan8/plant-v-zom-v1-game', '_blank')">
+                                        <i class="fab fa-github"></i> GitHub Repo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Plants vs Zombies Fan Game</h3>
+                            <p>My fan version of Plants vs Zombies, made from scratch for fun and practice.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML5</span>
+                                <span class="tech-tag">Canvas</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Game Logic</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="sleek-ecommerce.png.jpeg" alt="Sleek E-Commerce">
+                            <div class="project-overlay">
+                                <div class="overlay-content">
+                                    <button class="project-btn demo-btn" onclick="window.open('https://amenshan8.github.io/sleek-ecommerce/', '_blank')">
+                                        <i class="fas fa-external-link-alt"></i> Live Demo
+                                    </button>
+                                    <button class="project-btn github-btn" onclick="window.open('https://github.com/amenshan8/sleek-ecommerce', '_blank')">
+                                        <i class="fab fa-github"></i> GitHub Repo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Sleek E-Commerce (AI Assisted)</h3>
+                            <p>My first webshop project, with AI assistance for product descriptions. The API is currently stopped but the design is live.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML</span>
+                                <span class="tech-tag">CSS</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">AI Integration</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="CV for software dev.jpeg" alt="Software Developer CV">
+                            <div class="project-overlay">
+                                <div class="overlay-content">
+                                    <button class="project-btn demo-btn" onclick="window.open('https://amenshan8.github.io/AminShan-SoftwareDevCV/', '_blank')">
+                                        <i class="fas fa-external-link-alt"></i> Live Demo
+                                    </button>
+                                    <button class="project-btn github-btn" onclick="window.open('https://github.com/amenshan8/AminShan-SoftwareDevCV', '_blank')">
+                                        <i class="fab fa-github"></i> GitHub Repo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3>Software Developer CV</h3>
+                            <p>A sleek, modern CV/resume website showcasing my skills and experience as a software developer. Built with clean HTML, CSS, and JavaScript, featuring smooth animations and a professional design that stands out.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML</span>
+                                <span class="tech-tag">CSS</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Responsive</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ai-showcase" class="ai-showcase-section">
+            <div class="container">
+                <h2 class="section-title">My Work & Experience</h2>
+                <div class="ai-demo-container">
+                    <div class="prompt-examples">
+                        <h3>Career Goals</h3>
+                        <div class="prompt-input-group">
+                            <textarea id="promptInput" placeholder="My future goals...">I aim to work in software development and continue learning and growing in the tech industry.</textarea>
+                            <button id="generateBtn" class="generate-btn">
+                                <i class="fas fa-rocket"></i> Explore Goals
+                            </button>
+                        </div>
+                        <div id="promptOutput" class="prompt-output">
+I'm passionate about continuously expanding my knowledge in software development. My goal is to secure a position where I can contribute to meaningful projects while learning from experienced developers. I'm particularly interested in web development, game development, and software engineering roles that will challenge me to grow professionally.
+                        </div>
+                    </div>
+
+                    <div class="prompt-gallery">
+                        <h3>Languages & Skills</h3>
+                        <div class="example-cards">
+                            <div class="example-card" data-prompt="Languages">
+                                <h4>Multilingual Abilities</h4>
+                                <p>I speak Arabic (native), Turkish (fluent), Dutch (native), and English (fluent)</p>
+                                <code>Communication: 4 Languages</code>
+                            </div>
+                            <div class="example-card" data-prompt="Experience">
+                                <h4>Technical Projects</h4>
+                                <p>Experience with game development, website creation, and software cracking for educational purposes</p>
+                                <code>HTML + CSS + JavaScript</code>
+                            </div>
+                            <div class="example-card" data-prompt="Learning">
+                                <h4>Continuous Learning</h4>
+                                <p>Always eager to learn new technologies and improve existing skills</p>
+                                <code>Self-taught + Formal Education</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cv" class="cv-section">
+            <div class="container">
+                <h2 class="section-title">View My CV</h2>
+                
+                <div class="cv-container">
+                    <div class="terminal-intro">
+                        <div class="terminal-header">
+                            <div class="terminal-controls">
+                                <span class="control close"></span>
+                                <span class="control minimize"></span>
+                                <span class="control maximize"></span>
+                            </div>
+                            <span class="terminal-title">developer-cv.js</span>
+                        </div>
+                        
+                        <div class="terminal-content">
+                            <div class="type-effect">
+                                <span class="prompt">$ </span>
+                                <span class="command" id="typing-text"></span>
+                                <span class="cursor">|</span>
+                            </div>
+                            
+                            <div class="terminal-output">
+                                <div class="response">
+                                    Ready to explore my professional journey? Check out my interactive CV below ↓
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cv-preview">
+                        <div class="cv-window">
+                            <div class="cv-header">
+                                <div class="cv-controls">
+                                    <span class="cv-control red"></span>
+                                    <span class="cv-control yellow"></span>
+                                    <span class="cv-control green"></span>
+                                </div>
+                                <span class="cv-title">Amin Shan's Resume - Live Preview</span>
+                            </div>
+                            
+                            <div class="cv-content">
+                                <div class="cv-preview-card">
+                                    <div class="code-editor">
+                                        <div class="line-numbers">
+                                            <span>1</span>
+                                            <span>2</span>
+                                            <span>3</span>
+                                            <span>4</span>
+                                            <span>5</span>
+                                        </div>
+                                        <div class="code-content">
+                                            <span class="line"><span class="keyword">import</span> <span class="variable">Developer</span> <span class="keyword">from</span> <span class="string">'./amin-shan'</span>;</span>
+                                            <span class="line"><span class="keyword">import</span> <span class="variable">{ Skills, Projects } </span><span class="keyword">from</span> <span class="string">'./portfolio'</span>;</span>
+                                            <span class="line"></span>
+                                            <span class="line"><span class="keyword">const</span> <span class="variable">cv</span> = <span class="keyword">new</span> <span class="function">Developer</span>();</span>
+                                            <span class="line"><span class="function">cv</span>.<span class="method">showCV</span>();</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="cv-actions">
+                                        <a href="https://amenshan8.github.io/AminShan-SoftwareDevCV/" target="_blank" class="cv-btn primary">
+                                            <i class="fas fa-external-link-alt"></i>
+                                            View Full CV
+                                        </a>
+                                        <a href="CV2_2.pdf" download="AminShan-CV.pdf" class="cv-btn secondary">
+                                            <i class="fas fa-download"></i>
+                                            Download
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2 class="section-title">Let's Connect</h2>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h3>Ready to collaborate?</h3>
+                        <p>I'm currently looking for opportunities in software development. Whether you have a project in mind or just want to connect, I'd love to hear from you!</p>
+                        
+                        <div class="contact-methods">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>amenshan8@gmail.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>0618316269</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Apeldoorn, Netherlands</span>
+                            </div>
+                        </div>
+
+                        <div class="social-connect">
+                            <h4>Let's Connect</h4>
+                            <div class="social-links">
+                                <a href="https://github.com/amenshan8" target="_blank" class="social-link github">
+                                    <i class="fab fa-github"></i>
+                                    <span>GitHub</span>
+                                </a>
+                                <a href="https://www.linkedin.com/in/amin-shan-56b705360/" target="_blank" class="social-link linkedin">
+                                    <i class="fab fa-linkedin-in"></i>
+                                    <span>LinkedIn</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" required>
+                            <label for="name">Your Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" required>
+                            <label for="email">Email Address</label>
+                        </div>
+                        <div class="form-group">
+                            <select id="projectType" name="projectType" required>
+                                <option value="">Select Project Type</option>
+                                <option value="webdev">Web Development</option>
+                                <option value="gamedev">Game Development</option>
+                                <option value="collaboration">Collaboration</option>
+                                <option value="opportunity">Job Opportunity</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" required></textarea>
+                            <label for="message">Your Message</label>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            Send Message <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">Amin<span class="accent">Shan</span></span>
+                </div>
+                <p>&copy; 2024 Amin Shan. Aspiring Software Developer. Building the future, one line at a time.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
