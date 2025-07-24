@@ -1320,3 +1320,146 @@ body {
         font-size: 0.9rem;
     }
 }
+
+/* Language Switcher Styles */
+.language-switcher {
+    position: relative;
+    z-index: 1001;
+}
+
+.language-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    min-width: 60px;
+}
+
+.language-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.language-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    backdrop-filter: blur(20px);
+    min-width: 150px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1002;
+}
+
+.language-switcher:hover .language-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.language-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.language-option:hover {
+    background: rgba(99, 102, 241, 0.2);
+}
+
+.language-option:first-child {
+    border-radius: 12px 12px 0 0;
+}
+
+.language-option:last-child {
+    border-radius: 0 0 12px 12px;
+}
+
+.flag {
+    font-size: 1.2rem;
+}
+
+/* RTL Support */
+html[dir="rtl"] {
+    text-align: right;
+}
+
+html[dir="rtl"] .hero-content {
+    direction: rtl;
+}
+
+html[dir="rtl"] .hero-buttons {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .skills-languages-grid {
+    direction: rtl;
+}
+
+html[dir="rtl"] .contact-methods {
+    direction: rtl;
+}
+
+html[dir="rtl"] .form-group label {
+    left: auto;
+    right: 1rem;
+}
+
+html[dir="rtl"] .form-group input:focus + label,
+html[dir="rtl"] .form-group input:valid + label,
+html[dir="rtl"] .form-group textarea:focus + label,
+html[dir="rtl"] .form-group textarea:valid + label {
+    left: auto;
+    right: 0.5rem;
+}
+
+html[dir="rtl"] .skill-item {
+    direction: rtl;
+}
+
+html[dir="rtl"] .skill-header {
+    direction: rtl;
+}
+
+body.arabic-font {
+    font-family: 'Noto Sans Arabic', 'Inter', sans-serif;
+}
+
+/* Responsive Language Switcher */
+@media (max-width: 768px) {
+    .language-switcher {
+        margin-left: auto;
+    }
+    
+    .language-btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
+    }
+    
+    .language-dropdown {
+        right: -1rem;
+        width: 140px;
+    }
+}
