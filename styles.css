@@ -23,7 +23,7 @@ body {
     background: var(--bg-color);
     color: var(--text-primary);
     line-height: 1.6;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevent horizontal scroll from minor layout issues */
 }
 
 .container {
@@ -41,6 +41,7 @@ body {
     backdrop-filter: blur(20px);
     z-index: 1000;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add subtle shadow for depth */
 }
 
 .nav-container {
@@ -75,17 +76,36 @@ body {
     color: var(--text-secondary);
     text-decoration: none;
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.2s ease;
+    position: relative; /* For underline effect */
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
 }
 
 .nav-link:hover {
     color: var(--primary-color);
+    transform: translateY(-2px);
 }
 
 .hamburger {
     display: none;
     flex-direction: column;
     cursor: pointer;
+    z-index: 1001; /* Ensure hamburger is above menu when open */
 }
 
 .hamburger span {
@@ -96,6 +116,18 @@ body {
     transition: 0.3s;
 }
 
+.hamburger.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
 /* Hero Section */
 .hero {
     min-height: 100vh;
@@ -103,6 +135,7 @@ body {
     align-items: center;
     position: relative;
     background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+    padding-top: 80px; /* Add padding to account for fixed navbar */
 }
 
 .hero-container {
@@ -186,6 +219,7 @@ body {
     padding: 1.5rem;
     backdrop-filter: blur(20px);
     animation: float 6s ease-in-out infinite;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
 }
 
 .card-header {
@@ -212,6 +246,8 @@ body {
     font-family: 'Fira Code', monospace;
     font-size: 0.9rem;
     color: var(--text-secondary);
+    white-space: pre-wrap; /* Ensure line breaks are honored */
+    word-break: break-word; /* Break long lines */
 }
 
 .keyword { color: #8b5cf6; }
@@ -257,12 +293,7 @@ body {
     50% { opacity: 1; transform: scaleY(1.5); }
 }
 
-/* Skills Section */
-.skills-section {
-    padding: 6rem 0;
-    background: var(--bg-secondary);
-}
-
+/* Section Titles */
 .section-title {
     text-align: center;
     font-size: 3rem;
@@ -272,6 +303,13 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    padding-top: 2rem; /* Ensure title is not hidden by navbar */
+}
+
+/* Skills Section */
+.skills-section {
+    padding: 6rem 0;
+    background: var(--bg-secondary);
 }
 
 .skills-grid {
@@ -286,6 +324,13 @@ body {
     border-radius: 16px;
     padding: 2rem;
     backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-category:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 .category-header {
@@ -480,6 +525,7 @@ body {
     backdrop-filter: blur(20px);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Added shadow for better depth */
 }
 
 .project-card:hover {
@@ -694,6 +740,7 @@ body {
     white-space: pre-wrap;
     color: var(--text-secondary);
     line-height: 1.6;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Added subtle shadow */
 }
 
 .example-cards {
@@ -709,11 +756,14 @@ body {
     padding: 1.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Added subtle shadow */
 }
 
 .example-card:hover {
     background: rgba(99, 102, 241, 0.1);
     border-color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.2);
 }
 
 .example-card h4 {
@@ -786,6 +836,7 @@ body {
     border-radius: 16px;
     padding: 2rem;
     backdrop-filter: blur(20px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Added shadow */
 }
 
 .form-group {
@@ -909,6 +960,7 @@ body {
     border-radius: 16px;
     backdrop-filter: blur(20px);
     text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Added shadow */
 }
 
 .social-connect h4 {
@@ -978,11 +1030,12 @@ body {
     min-height: 100vh;
     display: flex;
     align-items: center;
+    padding-top: 80px; /* Adjust for fixed navbar */
 }
 
 .cv-container {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Already stacking, good for responsiveness */
     gap: 3rem;
     align-items: center;
 }
@@ -1190,7 +1243,34 @@ body {
     transform: translateY(-2px);
 }
 
-/* Responsive Design */
+/* Responsive Design - Tablet & Larger Phones */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+
+    .hero-title {
+        font-size: 3rem; /* Slightly smaller for tablets */
+    }
+
+    .section-title {
+        font-size: 2.5rem; /* Slightly smaller for tablets */
+        margin-bottom: 3rem; /* Adjusted for better spacing */
+    }
+
+    .hero-content {
+        gap: 3rem;
+    }
+
+    .skills-languages-grid, .skills-grid, .projects-grid, .ai-demo-container, .contact-container {
+        gap: 2rem; /* Reduce gap on smaller screens */
+    }
+
+    .skill-category, .project-card, .contact-form, .social-connect, .floating-card {
+        padding: 1.75rem; /* Slightly reduce padding */
+    }
+}
+
 @media (max-width: 768px) {
     .hamburger {
         display: flex;
@@ -1199,13 +1279,15 @@ body {
     .nav-menu {
         position: fixed;
         left: -100%;
-        top: 70px;
+        top: 70px; /* Aligned with navbar height */
         flex-direction: column;
         background-color: var(--bg-secondary);
         width: 100%;
         text-align: center;
         transition: 0.3s;
         padding: 2rem 0;
+        height: calc(100vh - 70px); /* Take full height below navbar */
+        overflow-y: auto; /* Allow scrolling if menu is long */
     }
     
     .nav-menu.active {
@@ -1221,6 +1303,15 @@ body {
         font-size: 2.5rem;
     }
     
+    .hero-description {
+        font-size: 1rem; /* Adjust description size for mobile */
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2.5rem; /* Adjust for mobile */
+    }
+    
     .skills-grid {
         grid-template-columns: 1fr;
     }
@@ -1231,7 +1322,7 @@ body {
     }
     
     .project-card {
-        margin: 0 1rem;
+        margin: 0 1rem; /* Add horizontal margin on mobile */
     }
     
     .project-image {
@@ -1251,6 +1342,7 @@ body {
     
     .ai-demo-container {
         grid-template-columns: 1fr;
+        gap: 2.5rem; /* Adjust gap for mobile */
     }
     
     .contact-container {
@@ -1313,6 +1405,11 @@ body {
         max-width: 250px;
         justify-content: center;
     }
+    /* Add padding to sections to prevent content from going under the fixed header */
+    .hero, .skills-languages-section, .skills-section, .projects-section, .ai-showcase-section, .cv-section, .contact-section {
+        padding-top: calc(70px + 2rem); /* Navbar height + some extra padding */
+        padding-bottom: 4rem; /* Ensure consistent bottom padding */
+    }
 }
 
 @media (max-width: 480px) {
@@ -1328,8 +1425,13 @@ body {
         font-size: 2rem;
     }
     
+    .hero-description {
+        font-size: 0.9rem; /* Further reduce description size */
+    }
+
     .section-title {
-        font-size: 2rem;
+        font-size: 1.8rem; /* Smaller for very small screens */
+        margin-bottom: 2rem;
     }
     
     .skills-languages-section .skill-category {
@@ -1345,17 +1447,33 @@ body {
     }
     
     .project-image {
-        height: 180px;
+        height: 160px; /* Slightly smaller image height */
     }
     
     .social-connect {
-        margin: 2rem 1rem;
+        margin: 2rem 0; /* Remove horizontal margin as container handles it */
         padding: 1.5rem;
     }
     
     .social-link {
         padding: 0.75rem 1.5rem;
         font-size: 0.9rem;
+    }
+    
+    .type-effect {
+        font-size: 1rem; /* Adjust terminal text size */
+    }
+
+    .terminal-content, .cv-content {
+        padding: 1rem;
+    }
+
+    .code-editor {
+        font-size: 0.75rem; /* Smaller code font */
+    }
+
+    .cv-btn {
+        padding: 0.8rem 1.5rem; /* Adjust CV button size */
     }
 }
 
@@ -1517,12 +1635,12 @@ body.arabic-font {
     }
     
     .language-dropdown {
-        right: -1rem;
+        right: -1rem; /* Aligns to the right of the container */
         width: 140px;
     }
 
     html[dir="rtl"] .language-dropdown {
-        left: -1rem;
+        left: -1rem; /* Aligns to the left of the container in RTL */
         right: auto;
     }
 }
