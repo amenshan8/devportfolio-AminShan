@@ -8,6 +8,8 @@ const generateBtn = document.getElementById('generateBtn');
 const promptOutput = document.getElementById('promptOutput');
 const contactForm = document.getElementById('contactForm');
 const exampleCards = document.querySelectorAll('.example-card');
+const langToggleBtn = document.getElementById('langToggle');
+const languageDropdown = document.querySelector('.language-dropdown');
 
 // Navigation Menu Toggle
 hamburger.addEventListener('click', () => {
@@ -65,11 +67,10 @@ const animateSkillsLanguages = () => {
         const rect = bar.getBoundingClientRect();
         const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
         
-        if (isVisible && !bar.classList.contains('animated')) {
+        if (isVisible && !bar.classList.contains('animate')) {
             const width = bar.getAttribute('data-width');
             bar.style.setProperty('--target-width', width + '%');
-            bar.style.width = width + '%';
-            bar.classList.add('animated');
+            bar.classList.add('animate');
         }
     });
 };
@@ -131,6 +132,14 @@ const translations = {
             title: "My Projects",
             liveDemo: "Live Demo",
             githubRepo: "GitHub Repo",
+            adnanPortfolio: {
+                title: "Adnan's Videographer Portfolio",
+                description: "A sleek and modern portfolio website for a professional videographer, designed to showcase his work with engaging visuals and a smooth user experience. It's built to impress potential clients and highlight his creative skills."
+            },
+            adnanEcard: {
+                title: "Adnan's Videographer E-Card",
+                description: "A dynamic and customizable digital e-card for a videographer, offering a modern way to share contact details and portfolio links. Designed for quick sharing and a professional first impression."
+            },
             workout: {
                 title: "Workout Planner App",
                 description: "My favorite project so far! A workout planner where you can add exercises, link videos, and export your plan to PDF. One day, I hope to turn this into a full mobile app to help people get healthier."
@@ -216,6 +225,14 @@ const translations = {
             title: "مشاريعي",
             liveDemo: "عرض مباشر",
             githubRepo: "مستودع GitHub",
+            adnanPortfolio: {
+                title: "محفظة عدنان للمصوّر",
+                description: "موقع محفظة أنيق وعصري لمصوّر فيديو محترف، مصمم لعرض أعماله بمرئيات جذابة وتجربة مستخدم سلسة. إنه مبني لإبهار العملاء المحتملين وإبراز مهاراته الإبداعية."
+            },
+            adnanEcard: {
+                title: "بطاقة عدنان الإلكترونية للمصوّر",
+                description: "بطاقة إلكترونية رقمية ديناميكية وقابلة للتخصيص لمصور فيديو، توفر طريقة حديثة لمشاركة تفاصيل الاتصال وروابط المحفظة. مصممة للمشاركة السريعة وترك انطباع أول احترافي."
+            },
             workout: {
                 title: "تطبيق مخطط التمارين",
                 description: "مشروعي المفضل حتى الآن! مخطط تمارين يمكنك من خلاله إضافة التمارين، ربط مقاطع الفيديو، وتصدير خطتك إلى PDF. يومًا ما، أتطلع إلى تحويله إلى تطبيق جوال كامل لمساعدة الناس على أن يكونوا أكثر صحة."
@@ -242,7 +259,7 @@ const translations = {
             },
             ebusiness: {
                 title: "مولد بطاقة الأعمال الإلكترونية",
-                description: "تم إنشاؤها لجعل أي شخص يبرز بشكل احترافي. هذه البطاقة التجارية الرقمية قابلة للتخصيص بالكامل بناءً على وظيفة المستخدم، صناعته، ونمطه الشخصي."
+                description: "تم إنشاؤها لجعل أي شخص يبرز بشكل احترافي. هذه البطاقة التجارية الرقمية قابلة للتخصيص بالكامل بناءً على وظيفته، صناعته، ونمطه الشخصي."
             }
         },
         cv: {
@@ -301,6 +318,14 @@ const translations = {
             title: "Mijn Projecten",
             liveDemo: "Live Demo",
             githubRepo: "GitHub Repository",
+            adnanPortfolio: {
+                title: "Adnans Videograaf Portfolio",
+                description: "Een strakke en moderne portfoliowebsite voor een professionele videograaf, ontworpen om zijn werk te presenteren met boeiende visuals en een soepele gebruikerservaring. Het is gebouwd om indruk te maken op potentiële klanten en zijn creatieve vaardigheden te benadrukken."
+            },
+            adnanEcard: {
+                title: "Adnans Videograaf E-Card",
+                description: "Een dynamische en aanpasbare digitale e-card voor een videograaf, die een moderne manier biedt om contactgegevens en portfolio links te delen. Ontworpen voor snel delen en een professionele eerste indruk."
+            },
             workout: {
                 title: "Workout Planner App",
                 description: "Mijn favoriete project tot nu toe! Een workout planner waarmee je oefeningen kunt toevoegen, video's kunt koppelen en je plan kunt exporteren naar PDF. Op een dag hoop ik dit om te toveren tot een volledige mobiele app om mensen gezonder te maken."
@@ -362,13 +387,18 @@ const translations = {
 class LanguageManager {
     constructor() {
         this.currentLang = localStorage.getItem('preferredLanguage') || 'en';
+        this.flags = { // Mapping for flag emojis (used only in dropdown)
+            'en': '🇺🇸',
+            'ar': '🇸🇦',
+            'nl': '🇳🇱'
+        };
         this.init();
     }
 
     init() {
         this.applyLanguage();
         this.setupEventListeners();
-        this.updateLanguageButton();
+        this.updateLanguageButton(); // Ensure the button reflects the initial language
     }
 
     applyLanguage() {
@@ -383,6 +413,7 @@ class LanguageManager {
 
         this.translateContent();
         this.updateSkillsCode();
+        this.updatePlaceholderTexts();
     }
 
     translateContent() {
@@ -391,28 +422,68 @@ class LanguageManager {
             const key = element.getAttribute('data-key');
             const value = this.getNestedValue(translations[this.currentLang], key);
             
-            if (value) {
-                // Handle textarea content
-                if (element.tagName === 'TEXTAREA') {
-                    element.setAttribute('data-placeholder-translation', value);
-                } else if (element.tagName === 'SELECT' && element.querySelector('option[value=""]')) {
-                    // Handle select placeholder
-                    element.querySelector('option[value=""]').textContent = value;
-                } else {
-                    element.textContent = value;
+            if (value && element.tagName !== 'TEXTAREA' && !(element.tagName === 'SELECT' && element.querySelector('option[value=""]'))) {
+                element.textContent = value;
+            }
+        });
+    }
+
+    updatePlaceholderTexts() {
+        // Handle textarea placeholder separately as textContent changes the actual input value
+        const promptInputEl = document.getElementById('promptInput');
+        if (promptInputEl) {
+            const originalPrompt = "I aim to work in software development and continue learning and growing in the tech industry.";
+            const translatedPrompt = this.getNestedValue(translations[this.currentLang], 'aiShowcase.promptPlaceholder') || originalPrompt;
+            promptInputEl.placeholder = translatedPrompt;
+            // Only update textContent if it's the default/initial value, not user-typed content
+            if (promptInputEl.value === originalPrompt) {
+                 promptInputEl.value = translatedPrompt;
+            }
+        }
+
+        const selectPlaceholder = document.querySelector('#projectType option[value=""]');
+        if (selectPlaceholder) {
+            selectPlaceholder.textContent = this.getNestedValue(translations[this.currentLang], 'contact.selectPlaceholder') || "Select Project Type";
+        }
+
+        // Update general form label placeholders
+        document.querySelectorAll('.form-group label').forEach(label => {
+            const inputId = label.getAttribute('for');
+            const inputEl = document.getElementById(inputId);
+            if (inputEl && inputEl.hasAttribute('data-key')) {
+                const key = inputEl.getAttribute('data-key');
+                const value = this.getNestedValue(translations[this.currentLang], key);
+                if (value) {
+                    label.textContent = value;
                 }
             }
         });
     }
 
     getNestedValue(obj, key) {
-        return key.split('.').reduce((current, key) => current[key], obj);
+        return key.split('.').reduce((current, key) => current && current[key], obj);
     }
 
     updateLanguageButton() {
-        const langText = document.querySelector('.lang-text');
-        const langCode = this.currentLang.toUpperCase();
-        langText.textContent = langCode;
+        const langToggle = document.getElementById('langToggle');
+        // Create new span for text
+        const langTextSpan = document.createElement('span');
+        langTextSpan.className = 'lang-text';
+
+        const langCodeDisplay = this.currentLang.toUpperCase();
+
+        langTextSpan.textContent = langCodeDisplay; // Set text first
+
+        // Clear existing content in the button
+        langToggle.innerHTML = '';
+
+        // Always add the generic globe icon for universal display
+        const genericIcon = document.createElement('i');
+        genericIcon.className = 'fas fa-globe';
+        langToggle.appendChild(genericIcon);
+
+        // Add the language text span
+        langToggle.appendChild(langTextSpan);
     }
 
     async changeLanguage(lang) {
@@ -426,6 +497,7 @@ class LanguageManager {
         
         setTimeout(() => {
             this.applyLanguage();
+            this.updateLanguageButton(); // Update button after language change
             document.body.style.opacity = '1';
         }, 150);
     }
@@ -435,63 +507,53 @@ class LanguageManager {
             button.addEventListener('click', (e) => {
                 const lang = e.target.closest('.language-option').dataset.lang;
                 this.changeLanguage(lang);
+                languageDropdown.classList.remove('show');
             });
+        });
+
+        // Toggle language dropdown visibility on button click
+        langToggleBtn.addEventListener('click', (event) => {
+            event.stopPropagation();
+            languageDropdown.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking anywhere else on the document
+        document.addEventListener('click', (event) => {
+            if (!languageDropdown.contains(event.target) && !langToggleBtn.contains(event.target)) {
+                languageDropdown.classList.remove('show');
+            }
         });
     }
 
     updateSkillsCode() {
         const skillsCode = document.querySelector('.skills-code');
         if (skillsCode) {
-            const skills = translations[this.currentLang].skillsText || {
-                languages: this.currentLang === 'ar' ? ["HTML", "CSS", "JavaScript", "Python (أساسي)", "SQL"] : 
-                         this.currentLang === 'nl' ? ["HTML", "CSS", "JavaScript", "Python (basis)", "SQL"] :
-                         ["HTML", "CSS", "JavaScript", "Python (basic)", "SQL"],
-                frameworks: this.currentLang === 'ar' ? ["React (تعلم)", "Tailwind CSS", "Node.js (أساسيات)"] :
-                           this.currentLang === 'nl' ? ["React (leren)", "Tailwind CSS", "Node.js (basics)"] :
-                           ["React (learning)", "Tailwind CSS", "Node.js (basics)"],
-                tools: ["Git", "GitHub", "Visual Studio Code", "Figma"],
-                specialties: translations[this.currentLang].specialties || [
-                    "API Integration",
-                    "Responsive Design", 
-                    "Browser Game Development",
-                    "AI-assisted Web Development",
-                    this.currentLang === 'ar' ? "مواقع متعددة اللغات (العربية، الهولندية، التركية، الإنجليزية)" :
-                    this.currentLang === 'nl' ? "Meertalige websites (Arabisch, Nederlands, Turks, Engels)" :
-                    "Multilingual Websites (Arabic, Dutch, Turkish, English)",
-                    this.currentLang === 'ar' ? "واجهة متاجر إلكترونية" :
-                    this.currentLang === 'nl' ? "E-commerce Frontend" :
-                    "E-commerce Frontend",
-                    "Workout Planner with PDF Export"
-                ],
-                goals: this.currentLang === 'ar' ? "أصبح مطور برمجيات محترف يخلق أدوات لمساعدة الناس في الصحة، اللياقة، والخدمات الرقمية." :
-                     this.currentLang === 'nl' ? "Word een professionele Software Developer die tools creëert om mensen te helpen met gezondheid, fitness en digitale diensten." :
-                     "Become a professional Software Developer who creates tools to help people in health, fitness, and digital services."
-            };
+            const currentSkillsText = translations[this.currentLang].skillsText || translations.en.skillsText;
             
             let skillsText = `<span class="keyword">const</span> <span class="variable">skillsOverview</span> = {\n`;
             
             // Languages
             skillsText += `  <span class="property">languages</span>: [`;
-            skillsText += skills.languages.map(s => `<span class="string">"${s}"</span>`).join(', ');
+            skillsText += currentSkillsText.languages.map(s => `<span class="string">"${s}"</span>`).join(', ');
             skillsText += `],\n`;
             
             // Frameworks
             skillsText += `  <span class="property">frameworks</span>: [`;
-            skillsText += skills.frameworks.map(s => `<span class="string">"${s}"</span>`).join(', ');
+            skillsText += currentSkillsText.frameworks.map(s => `<span class="string">"${s}"</span>`).join(', ');
             skillsText += `],\n`;
             
             // Tools
             skillsText += `  <span class="property">tools</span>: [`;
-            skillsText += skills.tools.map(s => `<span class="string">"${s}"</span>`).join(', ');
+            skillsText += currentSkillsText.tools.map(s => `<span class="string">"${s}"</span>`).join(', ');
             skillsText += `],\n`;
             
             // Specialties (first 4)
             skillsText += `  <span class="property">specialties</span>: [\n`;
-            skillsText += skills.specialties.slice(0, 4).map(s => `    <span class="string">"${s}"</span>`).join(',\n');
+            skillsText += currentSkillsText.specialties.slice(0, 4).map(s => `    <span class="string">"${s}"</span>`).join(',\n');
             skillsText += `\n  ],\n`;
             
             // Goals
-            skillsText += `  <span class="property">goals</span>: <span class="string">"${skills.goals}"</span>\n}`;
+            skillsText += `  <span class="property">goals</span>: <span class="string">"${currentSkillsText.goals}"</span>\n}`;
             
             skillsCode.innerHTML = skillsText;
         }
@@ -550,6 +612,22 @@ translations.nl.skillsText = {
     goals: "Word een professionele Software Developer die tools creëert om mensen te helpen met gezondheid, fitness en digitale diensten."
 };
 
+// Add AI Showcase specific translations
+translations.en.aiShowcase = {
+    promptPlaceholder: "My future goals...",
+    goalsDescription: "My aspiration to become a professional software developer and create impactful tools."
+};
+
+translations.ar.aiShowcase = {
+    promptPlaceholder: "أهدافي المستقبلية...",
+    goalsDescription: "طموحي أن أصبح مطور برمجيات محترف وأصنع أدوات مؤثرة."
+};
+
+translations.nl.aiShowcase = {
+    promptPlaceholder: "Mijn toekomstige doelen...",
+    goalsDescription: "Mijn ambitie om een professionele softwareontwikkelaar te worden en impactvolle tools te creëren."
+};
+
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
     langManager = new LanguageManager();
@@ -562,6 +640,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     `;
     document.head.appendChild(style);
+
+    // Initial animation calls
+    animateSkillBars();
+    animateSkillsLanguages();
+    animateCVSection();
 });
 
 // Add the new skills overview object
@@ -619,22 +702,6 @@ function animateCVSection() {
     observer.observe(cvSection);
 }
 
-// Initialize when DOM loads
-document.addEventListener('DOMContentLoaded', () => {
-    animateCVSection();
-    
-    // Add smooth scroll to CV section
-    const cvLink = document.querySelector('a[href="#cv"]');
-    if (cvLink) {
-        cvLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('cv').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
-        });
-    }
-});
-
 // AI Prompt Generation Demo
 generateBtn.addEventListener('click', async () => {
     const prompt = promptInput.value.trim();
@@ -648,85 +715,29 @@ generateBtn.addEventListener('click', async () => {
     generateBtn.disabled = true;
     
     try {
-        // Simulate AI response generation
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        // Use websim.chat.completions.create for AI generation
+        const completion = await websim.chat.completions.create({
+            messages: [
+                {
+                    role: "system",
+                    content: "You are a helpful assistant specialized in career development and technical skills. When given a prompt about career goals, provide an expanded, professional version of those goals. For other topics, provide a general but insightful response. Keep responses concise and to the point."
+                },
+                {
+                    role: "user",
+                    content: prompt
+                },
+            ],
+            max_tokens: 150,
+        });
         
-        const responses = {
-            'ui': `Here's an optimized prompt for UI design:
-
-"Create a modern, dark-themed dashboard interface with the following specifications:
-- Use glassmorphism design principles with subtle transparency
-- Implement a sidebar navigation with clean icons
-- Include data visualization cards with charts
-- Ensure responsive design for mobile and desktop
-- Use a color palette of deep blues and purples with accent colors
-- Add subtle animations and hover effects
-- Follow accessibility guidelines with proper contrast ratios"
-
-This prompt structure ensures specific, actionable results from AI design tools.`,
-            
-            'code': `Effective code generation prompt:
-
-"Generate a React functional component with TypeScript that:
-- Accepts props for title, data array, and onSelect callback
-- Implements a searchable dropdown with filtering
-- Uses styled-components for styling
-- Includes proper TypeScript interfaces
-- Handles edge cases (empty data, loading states)
-- Follows React best practices and hooks
-- Includes JSDoc comments for documentation
-- Exports the component as default"
-
-This approach yields production-ready, well-structured code.`,
-            
-            'content': `Content creation prompt example:
-
-"Write compelling landing page copy for a SaaS productivity tool:
-- Target audience: Remote teams and project managers
-- Tone: Professional yet approachable, emphasizing efficiency
-- Include: Powerful headline, 3 key benefits, social proof section
-- Focus on pain points: Communication gaps, deadline management
-- Call-to-action: Free trial signup
-- Word count: 300-500 words
-- Include emotional triggers and urgency
-- Optimize for conversion and readability"
-
-This structure ensures focused, conversion-optimized content.`
-        };
-        
-        let response = responses.ui; // Default response
-        
-        if (prompt.toLowerCase().includes('code') || prompt.toLowerCase().includes('component')) {
-            response = responses.code;
-        } else if (prompt.toLowerCase().includes('content') || prompt.toLowerCase().includes('copy')) {
-            response = responses.content;
-        } else if (prompt.toLowerCase().includes('ui') || prompt.toLowerCase().includes('design')) {
-            response = responses.ui;
-        } else {
-            response = `Based on your prompt: "${prompt}"
-
-Here's a structured approach to prompt engineering:
-
-1. **Context Setting**: Clearly define the role and expertise level
-2. **Specific Requirements**: List exact specifications and constraints
-3. **Output Format**: Specify the desired format and structure
-4. **Examples**: Provide examples of desired outcomes
-5. **Quality Criteria**: Define success metrics and standards
-
-Example optimized prompt:
-"As an expert [ROLE], create [SPECIFIC OUTPUT] that [REQUIREMENTS]. 
-The output should [FORMAT SPECIFICATIONS] and include [SPECIFIC ELEMENTS].
-Ensure [QUALITY CRITERIA] and follow [BEST PRACTICES]."
-
-This structure maximizes AI output quality and relevance.`;
-        }
-        
+        const response = completion.content;
         promptOutput.textContent = response;
         
     } catch (error) {
+        console.error('AI generation error:', error);
         promptOutput.textContent = 'Error generating response. Please try again.';
     } finally {
-        generateBtn.innerHTML = '<i class="fas fa-magic"></i> Generate Response';
+        generateBtn.innerHTML = '<i class="fas fa-rocket"></i> Explore Goals';
         generateBtn.disabled = false;
     }
 });
@@ -735,13 +746,21 @@ This structure maximizes AI output quality and relevance.`;
 exampleCards.forEach(card => {
     card.addEventListener('click', () => {
         const promptType = card.getAttribute('data-prompt');
-        const examples = {
-            'UI Design': 'Create a modern, accessible dashboard interface with dark theme and glassmorphism effects',
-            'Code Generation': 'Generate a React component with TypeScript for a searchable data table with pagination',
-            'Content Creation': 'Write compelling landing page copy for a SaaS productivity tool targeting remote teams'
-        };
-        
-        promptInput.value = examples[promptType] || '';
+        let promptText = '';
+
+        if (promptType === 'Goals') {
+            promptText = translations[langManager.currentLang].aiShowcase.goalsDescription || translations.en.aiShowcase.goalsDescription;
+        } else if (promptType === 'Languages') {
+            promptText = translations[langManager.currentLang].hero.description.split('\n\n')[1] || translations.en.hero.description.split('\n\n')[1];
+        } else if (promptType === 'Experience') {
+            promptText = translations[langManager.currentLang].hero.description.split('\n\n')[0] || translations.en.hero.description.split('\n\n')[0];
+        } else if (promptType === 'Learning') {
+            promptText = translations[langManager.currentLang].hero.description.split('\n\n')[0] || translations.en.hero.description.split('\n\n')[0]; // Adjust as needed
+            // For 'Learning' a more specific text might be beneficial, currently using a general one
+            // A more specific translation for 'Learning' could be added to translations object if desired.
+        }
+
+        promptInput.value = promptText.trim();
         promptInput.focus();
         
         // Scroll to input
@@ -781,8 +800,37 @@ contactForm.addEventListener('submit', async (e) => {
     submitBtn.disabled = true;
     
     try {
-        if (typeof emailjs === 'undefined') {
-            throw new Error('EmailJS not loaded. Please check your configuration.');
+        if (typeof emailjs === 'undefined' || EMAILJS_CONFIG.PUBLIC_KEY === 'user_5K8q7X9L8m2N3j4H') {
+            // Use FormSubmit as fallback
+            const form = e.target;
+            
+            // If these hidden inputs don't exist, create them
+            if (!form.querySelector('input[name="_next"]')) {
+                const nextInput = document.createElement('input');
+                nextInput.type = 'hidden';
+                nextInput.name = '_next';
+                nextInput.value = window.location.href + '?success=true';
+                form.appendChild(nextInput);
+            }
+            if (!form.querySelector('input[name="_subject"]')) {
+                const subjectInput = document.createElement('input');
+                subjectInput.type = 'hidden';
+                subjectInput.name = '_subject';
+                subjectInput.value = 'New Portfolio Message from ' + formData.get('name');
+                form.appendChild(subjectInput);
+            }
+            if (!form.querySelector('input[name="_captcha"]')) {
+                const captchaInput = document.createElement('input');
+                captchaInput.type = 'hidden';
+                captchaInput.name = '_captcha';
+                captchaInput.value = 'false';
+                form.appendChild(captchaInput);
+            }
+            
+            form.action = 'https://formsubmit.co/amenshan8@gmail.com';
+            form.method = 'POST';
+            form.submit();
+            return; // Exit to prevent further JS execution
         }
         
         // Send email using EmailJS
@@ -808,12 +856,12 @@ contactForm.addEventListener('submit', async (e) => {
         showStatus('Oops! Something went wrong. Please try again or email me directly at amenshan8@gmail.com', 'error');
     } finally {
         // Reset button
-        submitBtn.innerHTML = 'Send Message <i class="fas fa-paper-plane"></i>';
+        submitBtn.innerHTML = translations[langManager.currentLang].contact.sendMessage + ' <i class="fas fa-paper-plane"></i>';
         submitBtn.disabled = false;
         
         // Hide status after 5 seconds
         setTimeout(() => {
-            const statusMessage = document.querySelector('.form-status');
+            const statusMessage = document.getElementById('formStatus');
             if (statusMessage) {
                 statusMessage.style.display = 'none';
             }
@@ -830,43 +878,6 @@ function showStatus(message, type) {
     // Auto-scroll to status message
     statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
-
-// Fallback form submission (if EmailJS fails or isn't configured)
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Check if EmailJS is properly configured
-    if (!EMAILJS_CONFIG.PUBLIC_KEY || EMAILJS_CONFIG.PUBLIC_KEY === 'user_5K8q7X9L8m2N3j4H') {
-        // Use FormSubmit as fallback
-        const form = e.target;
-        const formData = new FormData(form);
-        
-        // Create hidden inputs for FormSubmit
-        const nextInput = document.createElement('input');
-        nextInput.type = 'hidden';
-        nextInput.name = '_next';
-        nextInput.value = window.location.href + '?success=true';
-        
-        const subjectInput = document.createElement('input');
-        subjectInput.type = 'hidden';
-        subjectInput.name = '_subject';
-        subjectInput.value = 'New Portfolio Message from ' + formData.get('name');
-        
-        const captchaInput = document.createElement('input');
-        captchaInput.type = 'hidden';
-        captchaInput.name = '_captcha';
-        captchaInput.value = 'false';
-        
-        form.appendChild(nextInput);
-        form.appendChild(subjectInput);
-        form.appendChild(captchaInput);
-        
-        // Submit to FormSubmit
-        form.action = 'https://formsubmit.co/amenshan8@gmail.com';
-        form.method = 'POST';
-        form.submit();
-    }
-});
 
 // Add this CSS for status messages
 const style = document.createElement('style');
@@ -898,7 +909,7 @@ style.textContent = `
 document.head.appendChild(style);
 
 // Optional: Add form field animations
-document.querySelectorAll('.form-group input, .form-group textarea').forEach(input => {
+document.querySelectorAll('.form-group input, .form-group textarea, .form-group select').forEach(input => {
     input.addEventListener('blur', function() {
         if (this.value) {
             this.classList.add('has-value');
@@ -906,6 +917,20 @@ document.querySelectorAll('.form-group input, .form-group textarea').forEach(inp
             this.classList.remove('has-value');
         }
     });
+    // For selects, if a non-empty option is selected, add has-value
+    if (input.tagName === 'SELECT') {
+        input.addEventListener('change', function() {
+            if (this.value) {
+                this.classList.add('has-value');
+            } else {
+                this.classList.remove('has-value');
+            }
+        });
+    }
+    // Check initial state on load
+    if (input.value) {
+        input.classList.add('has-value');
+    }
 });
 
 // Enhanced project card interactions
@@ -954,19 +979,8 @@ document.querySelectorAll('.project-btn').forEach(button => {
     });
 });
 
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const parallaxElements = document.querySelectorAll('.floating-card');
-    
-    parallaxElements.forEach(element => {
-        const speed = 0.5;
-        element.style.transform = `translateY(${scrolled * speed}px)`;
-    });
-});
-
 // Dynamic typing effect for hero title
-function typeWriter(element, text, speed = 100) {
+function genericTypeWriter(element, text, speed = 100) {
     let i = 0;
     element.innerHTML = '';
     
@@ -994,7 +1008,7 @@ document.querySelectorAll('.project-card, .skill-category, .example-card').forEa
 
 // Update the floating card content dynamically
 document.addEventListener('DOMContentLoaded', () => {
-    const skillsOverview = {
+    const skillsOverviewContent = {
         languages: ["HTML", "CSS", "JavaScript", "Python (basic)", "SQL"],
         frameworks: ["React (learning)", "Tailwind CSS", "Node.js (basics)"],
         tools: ["Git", "GitHub", "Visual Studio Code", "Figma"],
@@ -1013,15 +1027,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const codePreview = document.querySelector('.code-preview code');
     if (codePreview) {
+        // Use a function to get translated goals for the skills overview card
+        const getTranslatedGoal = (lang) => {
+            return translations[lang].skillsText.goals || translations.en.skillsText.goals;
+        };
+
+        const currentGoal = getTranslatedGoal(langManager.currentLang);
+
         const codeString = `<span class="keyword">const</span> <span class="variable">skillsOverview</span> = {
-    <span class="property">languages</span>: [${skillsOverview.languages.map(s => `<span class="string">"${s}"</span>`).join(', ')}],
-    <span class="property">frameworks</span>: [${skillsOverview.frameworks.map(s => `<span class="string">"${s}"</span>`).join(', ')}],
-    <span class="property">tools</span>: [${skillsOverview.tools.map(s => `<span class="string">"${s}"</span>`).join(', ')}],
+    <span class="property">languages</span>: [${skillsOverviewContent.languages.map(s => `<span class="string">"${s}"</span>`).join(', ')}],
+    <span class="property">frameworks</span>: [${skillsOverviewContent.frameworks.map(s => `<span class="string">"${s}"</span>`).join(', ')}],
+    <span class="property">tools</span>: [${skillsOverviewContent.tools.map(s => `<span class="string">"${s}"</span>`).join(', ')}],
     <span class="property">specialties</span>: [
-${skillsOverview.specialties.slice(0, 4).map(s => `        <span class="string">"${s}"</span>`).join(',\n')}
+        ${skillsOverviewContent.specialties.slice(0, 4).map(s => `<span class="string">"${s}"</span>`).join(',\n        ')}
     ],
-    <span class="property">goals</span>: <span class="string">"${skillsOverview.goals}"</span>
-};</span>`;
+    <span class="property">goals</span>: <span class="string">"${currentGoal}"</span>
+};`;
         
         codePreview.innerHTML = codeString;
     }
