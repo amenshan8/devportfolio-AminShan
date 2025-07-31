@@ -328,7 +328,7 @@ body {
     background: var(--gradient-primary);
     border-radius: 4px;
     width: 0%;
-    transition: width 1s ease-in-out;
+    transition: width 1.5s ease-in-out;
 }
 
 /* Skills & Languages Section */
@@ -542,6 +542,24 @@ body {
     align-items: center;
     gap: 0.5rem;
     min-width: 140px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ripple effect for buttons */
+.project-btn .ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
 }
 
 .demo-btn {
@@ -801,6 +819,7 @@ body {
     box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
 }
 
+/* For labels that act as placeholders */
 .form-group label {
     position: absolute;
     top: 1rem;
@@ -808,18 +827,37 @@ body {
     color: var(--text-secondary);
     transition: all 0.3s ease;
     pointer-events: none;
+    background-color: var(--bg-color);
+    padding: 0 0.25rem;
+    transform-origin: left top;
 }
 
 .form-group input:focus + label,
-.form-group input:valid + label,
+.form-group input:not(:placeholder-shown) + label,
 .form-group textarea:focus + label,
-.form-group textarea:valid + label {
+.form-group textarea:not(:placeholder-shown) + label,
+.form-group select:focus + label,
+.form-group select:not([value=""]) + label {
     top: -0.5rem;
     left: 0.5rem;
     font-size: 0.8rem;
     color: var(--primary-color);
     background: var(--bg-color);
     padding: 0 0.5rem;
+    transform: scale(0.9);
+}
+
+/* For elements with .has-value class (JS controlled) */
+.form-group input.has-value + label,
+.form-group textarea.has-value + label,
+.form-group select.has-value + label {
+    top: -0.5rem;
+    left: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    background: var(--bg-color);
+    padding: 0 0.5rem;
+    transform: scale(0.9);
 }
 
 .submit-btn {
@@ -1363,12 +1401,14 @@ body {
     transform: translateY(-10px);
     transition: all 0.3s ease;
     z-index: 1002;
+    pointer-events: none;
 }
 
-.language-switcher:hover .language-dropdown {
+.language-dropdown.show {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+    pointer-events: auto;
 }
 
 .language-option {
@@ -1383,6 +1423,7 @@ body {
     cursor: pointer;
     transition: background 0.3s ease;
     font-size: 0.9rem;
+    text-align: left;
 }
 
 .language-option:hover {
@@ -1428,11 +1469,14 @@ html[dir="rtl"] .form-group label {
 }
 
 html[dir="rtl"] .form-group input:focus + label,
-html[dir="rtl"] .form-group input:valid + label,
+html[dir="rtl"] .form-group input:not(:placeholder-shown) + label,
 html[dir="rtl"] .form-group textarea:focus + label,
-html[dir="rtl"] .form-group textarea:valid + label {
+html[dir="rtl"] .form-group textarea:not(:placeholder-shown) + label,
+html[dir="rtl"] .form-group select:focus + label,
+html[dir="rtl"] .form-group select:not([value=""]) + label {
     left: auto;
     right: 0.5rem;
+    transform-origin: right top;
 }
 
 html[dir="rtl"] .skill-item {
@@ -1440,7 +1484,21 @@ html[dir="rtl"] .skill-item {
 }
 
 html[dir="rtl"] .skill-header {
-    direction: rtl;
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .skill-progress {
+    left: auto;
+    right: 0;
+}
+
+html[dir="rtl"] .language-dropdown {
+    left: 0;
+    right: auto;
+}
+
+html[dir="rtl"] .language-option {
+    text-align: right;
 }
 
 body.arabic-font {
@@ -1461,5 +1519,10 @@ body.arabic-font {
     .language-dropdown {
         right: -1rem;
         width: 140px;
+    }
+
+    html[dir="rtl"] .language-dropdown {
+        left: -1rem;
+        right: auto;
     }
 }
