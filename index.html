@@ -10,7 +10,7 @@
     <meta name="description" content="Amin Shan - Aspiring Software Developer. Multilingual portfolio showcasing web development, game development, and AI-assisted projects.">
 </head>
 <body>
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
                 <span class="logo-text">Amin<span class="accent">Shan</span></span>
@@ -62,10 +62,10 @@
                             I speak Arabic, Turkish, Dutch, and English.
                         </p>
                         <div class="hero-buttons">
-                            <button class="btn-primary" onclick="scrollToSection('projects')">
+                            <button class="btn-primary scroll-to-btn" data-target="projects">
                                 <span data-key="hero.viewProjects">View Projects</span> <i class="fas fa-arrow-right"></i>
                             </button>
-                            <button class="btn-secondary" onclick="scrollToSection('contact')">
+                            <button class="btn-secondary scroll-to-btn" data-target="contact">
                                 <span data-key="hero.contactMe">Contact Me</span> <i class="fas fa-envelope"></i>
                             </button>
                         </div>
