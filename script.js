@@ -10,6 +10,7 @@ const contactForm = document.getElementById('contactForm');
 const exampleCards = document.querySelectorAll('.example-card');
 const langToggleBtn = document.getElementById('langToggle');
 const languageDropdown = document.querySelector('.language-dropdown');
+const scrollToButtons = document.querySelectorAll('.scroll-to-btn'); // New: Select all buttons with this class
 
 // Navigation Menu Toggle
 hamburger.addEventListener('click', () => {
@@ -29,7 +30,17 @@ navLinks.forEach(link => {
 function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
     if (section) {
-        section.scrollIntoView({ behavior: 'smooth' });
+        const navbar = document.getElementById('navbar'); // Get the navbar element
+        const navbarHeight = navbar ? navbar.offsetHeight : 0; // Get its height, default to 0 if not found
+        
+        // Calculate the target scroll position considering the fixed navbar
+        const targetScrollPosition = section.offsetTop - navbarHeight;
+
+        // Use window.scrollTo for precise control
+        window.scrollTo({
+            top: targetScrollPosition,
+            behavior: 'smooth'
+        });
     }
 }
 
@@ -38,6 +49,14 @@ navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
         const targetId = link.getAttribute('href').substring(1);
+        scrollToSection(targetId);
+    });
+});
+
+// Add click event to hero buttons (using the new data-target attribute)
+scrollToButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        const targetId = e.currentTarget.getAttribute('data-target');
         scrollToSection(targetId);
     });
 });
@@ -82,7 +101,9 @@ window.addEventListener('scroll', () => {
     
     // Update active navigation link
     const sections = document.querySelectorAll('section[id]');
-    const scrollPos = window.scrollY + 100;
+    const navbar = document.getElementById('navbar');
+    const navbarHeight = navbar ? navbar.offsetHeight : 0;
+    const scrollPos = window.scrollY + navbarHeight + 10; // Add a small buffer (10px) to ensure correct section highlights
     
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
